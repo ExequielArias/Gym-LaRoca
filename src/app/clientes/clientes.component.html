@@ -1,1 +1,48 @@
-<p>clientes works!</p>
+<div class="min-h-screen bg-background">
+    <header class="border-b bg-white px-6 py-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a routerLink="/dashboard" class="text-rose-600 font-semibold">← Dashboard</a>
+            <h2 class="font-semibold">Gestión de Clientes</h2>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="container mx-auto max-w-7xl px-6 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">Gestión de Clientes</h1>
+            <p class="text-muted-foreground text-lg">Administra la información de todos los clientes del gimnasio</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex gap-4">
+                    <button class="px-4 py-2 bg-rose-600 text-white rounded-lg" (click)="openNewClientDialog()">Nuevo Cliente</button>
+            </div>
+            <div class="flex gap-2">
+                    <input type="text" placeholder="Buscar cliente..." class="border rounded-lg px-3 py-2" [(ngModel)]="searchTerm" (input)="filterClients()">
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div *ngFor="let client of filteredClients" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-200">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-rose-600 font-semibold">{{ client.name.charAt(0) }}</span>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">{{ client.name }}</h3>
+                        <p class="text-sm text-muted-foreground">{{ client.email }}</p>
+                    </div>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <p><span class="font-medium">Teléfono:</span> {{ client.phone }}</p>
+                    <p><span class="font-medium">Membresía:</span> {{ client.membership }}</p>
+                    <p><span class="font-medium">Última visita:</span> {{ client.lastVisit }}</p>
+                </div>
+                <div class="flex gap-2 mt-4">
+                        <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded text-sm" (click)="editClient(client)">Editar</button>
+                        <button class="px-3 py-1 bg-green-100 text-green-600 rounded text-sm" (click)="viewRoutine(client)">Ver Rutina</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

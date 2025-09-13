@@ -1,37 +1,35 @@
 import { Component } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AuthService } from '../../auth.service';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-login-dialog',
   standalone: true,
-  imports: [FormsModule, InputTextModule, PasswordModule, ButtonModule, RippleModule],
-  templateUrl: './login-dialog.component.html',
-  styleUrls: ['./login-dialog.component.css']
+  selector: 'app-login',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login-dialog.component.html'
 })
-export class LoginDialogComponent {
-  username = '';
+export class LoginComponent {
+  email = '';
   password = '';
+  error = '';
+  isLoading = false;
 
-  constructor(
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
-    private authService: AuthService
-  ) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
-  login() {
-    if (this.username && this.password) {
-      const success = this.authService.login(this.username, this.password);
+  async handleSubmit(e?: Event) {
+    if (e) e.preventDefault();
+    this.error = '';
+    this.isLoading = true;
+    setTimeout(() => {
+      const success = this.auth.login(this.email, this.password);
+      this.isLoading = false;
       if (success) {
-        this.ref.close(true);
+        this.router.navigateByUrl('/dashboard');
       } else {
-        alert('Usuario o contraseña incorrectos');
+        this.error = 'Credenciales incorrectas. Intenta admin@gymlaroca.com / admin123';
       }
-    }
+    }, 500);
   }
 }

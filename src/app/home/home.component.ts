@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, ButtonModule, RippleModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
@@ -17,10 +16,30 @@ export class HomeComponent {
   ];
 
   benefits = [
-    { icon: 'pi pi-dumbbell text-yellow-500', text: 'Más de 100 equipos de entrenamiento' },
-    { icon: 'pi pi-users text-green-500', text: 'Clases grupales: yoga, spinning, zumba' },
-    { icon: 'pi pi-shopping-cart text-blue-500', text: 'Barra de batidos y suplementos' },
-    { icon: 'pi pi-shield text-purple-500', text: 'Duchas, lockers y toallas gratuitas' },
-    { icon: 'pi pi-clock text-orange-500', text: 'Horario ampliado: 5 AM - 11 PM' }
+    { icon: '💪', text: 'Más de 100 equipos de entrenamiento' },
+    { icon: '👥', text: 'Clases grupales: yoga, spinning, zumba' },
+    { icon: '🧃', text: 'Barra de batidos y suplementos' },
+    { icon: '🛡️', text: 'Duchas, lockers y toallas gratuitas' },
+    { icon: '⏰', text: 'Horario ampliado: 5 AM - 11 PM' }
+  ];
+
+  stats = [
+    { label: 'Miembros Activos', value: '500+' },
+    { label: 'Entrenadores Certificados', value: '15' },
+    { label: 'Acceso al Gimnasio', value: '24/7' },
+    { label: 'Años de Experiencia', value: '5' }
+  ];
+
+  trainers = [
+    { name: 'Carlos Mendoza', specialty: 'Entrenamiento de Fuerza' },
+    { name: 'Ana García', specialty: 'Fitness Funcional' },
+    { name: 'Miguel Torres', specialty: 'Rehabilitación Deportiva' }
+  ];
+
+  products = [
+    { name: 'Proteína Whey', price: '$45.000' },
+    { name: 'Creatina Monohidrato', price: '$25.000' },
+    { name: 'Camiseta Gym LaRoca', price: '$18.000' },
+    { name: 'Shaker Premium', price: '$12.000' }
   ];
 }

@@ -1,34 +1,44 @@
-<div class="p-8 max-w-sm mx-auto bg-white rounded-2xl shadow-xl transform transition-all duration-300 hover:shadow-2xl">
+<div class="min-h-screen bg-background flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <a routerLink="/" class="inline-flex items-center space-x-2 mb-6">
+                <span class="text-2xl font-bold text-rose-600">Gym LaRoca</span>
+            </a>
+            <h1 class="font-heading text-2xl font-bold mb-2">Iniciar Sesión</h1>
+            <p class="text-muted-foreground">Accede al panel administrativo</p>
+        </div>
 
-    <!-- Título -->
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6 tracking-tight">
-        🔐 Iniciar Sesión
-    </h2>
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <form (submit)="handleSubmit($event)" class="space-y-4">
+                <div *ngIf="error" class="p-2 bg-red-100 text-red-700 rounded">{{ error }}</div>
 
-    <!-- Campo Usuario -->
-    <div class="mb-5">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Usuario (Email)</label>
-        <input id="username" type="text" pInputText [(ngModel)]="username" placeholder="ejemplo@correo.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-800 
-             focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 
-             transition-all duration-200 shadow-sm" />
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium">Email</label>
+                    <input id="email" type="email" [(ngModel)]="email" name="email" required
+                        class="w-full px-4 py-2 border rounded" placeholder="admin@gymlaroca.com" />
+                </div>
+
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium">Contraseña</label>
+                    <input id="password" type="password" [(ngModel)]="password" name="password" required
+                        class="w-full px-4 py-2 border rounded" placeholder="••••••" />
+                </div>
+
+                <button type="submit" [disabled]="isLoading" class="w-full py-2 bg-rose-600 text-white rounded">
+                    <span *ngIf="isLoading">Iniciando...</span>
+                    <span *ngIf="!isLoading">Iniciar Sesión</span>
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <a routerLink="/" class="text-sm text-muted-foreground hover:text-rose-600">← Volver al inicio</a>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded">
+                <p class="text-sm font-medium mb-2">Credenciales de prueba:</p>
+                <p class="text-xs">Admin: admin&#64;gymlaroca.com / admin123</p>
+                <p class="text-xs">Staff: staff&#64;gymlaroca.com / staff123</p>
+            </div>
+        </div>
     </div>
-
-    <!-- Campo Contraseña -->
-    <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
-        <input id="password" type="password" pInputText [(ngModel)]="password" placeholder="********" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-800 
-             focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 
-             transition-all duration-200 shadow-sm" />
-    </div>
-
-    <!-- Botón -->
-    <button pButton pRipple label="Acceder" icon="pi pi-check" (click)="login()" class="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 
-           hover:from-blue-700 hover:to-purple-700 
-           text-white font-semibold rounded-xl 
-           shadow-lg hover:shadow-2xl 
-           transform hover:scale-105 
-           transition-all duration-300 
-           focus:outline-none focus:ring-4 focus:ring-purple-300">
-    </button>
-
 </div>
