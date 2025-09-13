@@ -1,57 +1,44 @@
-<div class="p-8 max-w-lg mx-auto bg-gray-50 rounded-3xl shadow-2xl transform transition-all duration-300">
+<div class="min-h-screen bg-background flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <a routerLink="/" class="inline-flex items-center space-x-2 mb-6">
+                <span class="text-2xl font-bold text-rose-600">Gym LaRoca</span>
+            </a>
+            <h1 class="font-heading text-2xl font-bold mb-2">Iniciar Sesión</h1>
+            <p class="text-muted-foreground">Accede al panel administrativo</p>
+        </div>
 
-    <div class="text-center mb-8">
-        <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight leading-none">
-            Acceder a tu cuenta
-        </h2>
-        <p class="mt-2 text-sm text-gray-600">
-            Bienvenido de nuevo! Ingresa tus credenciales para continuar.
-        </p>
-    </div>
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <form (submit)="handleSubmit($event)" class="space-y-4">
+                <div *ngIf="error" class="p-2 bg-red-100 text-red-700 rounded">{{ error }}</div>
 
-    <div class="mb-6">
-        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Usuario (Email)</label>
-        <div class="relative">
-            <input id="username" type="text" placeholder="ejemplo@correo.com" class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-400 
-            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-            transition-colors duration-200" />
-            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12z" />
-            </svg>
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium">Email</label>
+                    <input id="email" type="email" [(ngModel)]="email" name="email" required
+                        class="w-full px-4 py-2 border rounded" placeholder="admin@gymlaroca.com" />
+                </div>
+
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium">Contraseña</label>
+                    <input id="password" type="password" [(ngModel)]="password" name="password" required
+                        class="w-full px-4 py-2 border rounded" placeholder="••••••" />
+                </div>
+
+                <button type="submit" [disabled]="isLoading" class="w-full py-2 bg-rose-600 text-white rounded">
+                    <span *ngIf="isLoading">Iniciando...</span>
+                    <span *ngIf="!isLoading">Iniciar Sesión</span>
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <a routerLink="/" class="text-sm text-muted-foreground hover:text-rose-600">← Volver al inicio</a>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded">
+                <p class="text-sm font-medium mb-2">Credenciales de prueba:</p>
+                <p class="text-xs">Admin: admin&#64;gymlaroca.com / admin123</p>
+                <p class="text-xs">Staff: staff&#64;gymlaroca.com / staff123</p>
+            </div>
         </div>
     </div>
-
-    <div class="mb-8">
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
-        <div class="relative">
-            <input id="password" type="password" FFplaceholder="********" class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-400 
-            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-            transition-colors duration-200" />
-            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-        </div>
-    </div>
-
-    <button pButton pRipple (click)="login()" class="w-full py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 
-            text-white font-bold rounded-xl shadow-lg 
-            hover:from-blue-600 hover:to-indigo-700 
-            transform hover:scale-105 
-            transition-all duration-300 
-            focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
-        Acceder
-    </button>
-
-    <div class="text-center mt-6">
-        <a href="#" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-            No tienes cuenta? <span class="font-bold text-indigo-500">Regístrate</span>
-        </a>
-    </div>
-
 </div>

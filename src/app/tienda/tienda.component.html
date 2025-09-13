@@ -1,0 +1,40 @@
+<div class="min-h-screen bg-background">
+    <header class="border-b bg-white px-6 py-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a routerLink="/dashboard" class="text-rose-600 font-semibold">← Dashboard</a>
+            <h2 class="font-semibold">Tienda</h2>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="container mx-auto max-w-7xl px-6 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">Tienda de Productos</h1>
+            <p class="text-muted-foreground text-lg">Descubre nuestros productos y suplementos</p>
+        </div>
+        <div class="flex justify-end mb-4">
+            <button class="px-4 py-2 bg-green-600 text-white rounded" (click)="addProduct()">Agregar Producto</button>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let p of products; let i = index" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-200">
+                <div class="aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center mb-4">
+                    <img src="/product-placeholder.png" alt="{{p.name}}" class="w-full h-full object-cover">
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="font-semibold">{{ p.name }}</h4>
+                        <p class="text-sm text-muted-foreground">{{ p.description }}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sm font-bold">{{ p.price }}</span>
+                        <div class="text-xs text-gray-500">{{ p.badge }}</div>
+                        <button class="mt-2 px-2 py-1 bg-red-100 text-red-700 rounded text-xs" (click)="deleteProduct(i)">Eliminar</button>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="w-full px-3 py-2 bg-rose-600 text-white rounded" (click)="viewDetails(p)">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

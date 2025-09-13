@@ -1,41 +1,31 @@
-import { Routes } from '@angular/router';
-// import { authGuard } from './core/guards/auth.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './auth/login/login-dialog/login-dialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AsistenciasComponent } from './asistencias/asistencias.component';
+import { RutinasComponent } from './rutinas/rutinas.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { PagosComponent } from './pagos/pagos.component';
+import { TiendaComponent } from './tienda/tienda.component';
+
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
-    title: 'Gym LaRoca | Inicio'
-  },
-//   {
-//     path: 'productos',
-//     loadComponent: () => import('./public/products/products.component').then(m => m.ProductsComponent),
-//     title: 'Productos'
-//   },
-  // Módulos privados (protegidos)
-  {
-    path: 'asistencias',
-    // canActivate: [authGuard],
-    loadComponent: () => import('./asistencias/asistencias.component').then(m => m.AsistenciasComponent),
-    title: 'Registro de Asistencias'
-  },
-  {
-    path: 'clientes',
-    // canActivate: [authGuard],
-    loadComponent: () => import('./clientes/clientes.component').then(m => m.ClientesComponent),
-    title: 'Clientes'
-  },
-  {
-    path: 'rutinas',
-    // canActivate: [authGuard],
-    loadComponent: () => import('./rutinas/rutinas.component').then(m => m.RutinasComponent),
-    title: 'Rutinas'
-  },
-  {
-    path: 'pagos',
-    // canActivate: [authGuard],
-    loadComponent: () => import('./pagos/pagos.component').then(m => m.PagosComponent),
-    title: 'Pagos'
-  },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'asistencias', component: AsistenciasComponent, canActivate: [AuthGuard] },
+  { path: 'rutinas', component: RutinasComponent, canActivate: [AuthGuard] },
+  { path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard] },
+  { path: 'pagos', component: PagosComponent, canActivate: [AuthGuard] },
+  { path: 'tienda', component: TiendaComponent },
   { path: '**', redirectTo: '' }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,43 +1,57 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface User {
-  username: string;
-  password: string;
-  role: string;
+  name: string;
+  email: string;
+  role?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private users: User[] = [
-    { username: 'admin', password: '1234', role: 'admin' },
-    { username: 'user', password: '1234', role: 'user' }
-  ];
+  private _user = signal<User | null>(null);
 
-  private loggedIn = false;
+  user$ = {
+    get: () => this._user(),
+  };
 
-  login(username: string, password: string): boolean {
-    const user = this.users.find(u => u.username === username && u.password === password);
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.loggedIn = true;
+  constructor(private router: Router) {
+    // intentar cargar usuario desde localStorage
+    const raw = localStorage.getItem('auth_user');
+    if (raw) {
+      try { this._user.set(JSON.parse(raw)); } catch { }
+    }
+  }
+
+  login(email: string, password: string) {
+    // Mock: aceptamos admin@gymlaroca.com / admin123
+    if ((email === 'admin@gymlaroca.com' && password === 'admin123') ||
+      (email === 'staff@gymlaroca.com' && password === 'staff123')) {
+      const user: User = {
+        name: email === 'admin@gymlaroca.com' ? 'Administrador' : 'Staff',
+        email,
+        role: email === 'admin@gymlaroca.com' ? 'admin' : 'staff'
+      };
+      this._user.set(user);
+      localStorage.setItem('auth_user', JSON.stringify(user));
       return true;
     }
     return false;
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('currentUser');
-  }
-
-  logout(): void {
-    localStorage.removeItem('currentUser');
-    this.loggedIn = false;
+  logout() {
+    this._user.set(null);
+    localStorage.removeItem('auth_user');
+    this.router.navigateByUrl('/');
   }
 
   getCurrentUser(): User | null {
-    const user = localStorage.getItem('currentUser');
-    return user ? JSON.parse(user) : null;
+    return this._user();
+  }
+
+  isAuthenticated(): boolean {
+    return !!this._user();
   }
 }

@@ -1,1 +1,81 @@
-<p>asistencias works!</p>
+<div class="min-h-screen bg-background">
+    <header class="border-b bg-white px-6 py-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a routerLink="/dashboard" class="text-rose-600 font-semibold">← Dashboard</a>
+            <h2 class="font-semibold">Control de Asistencias</h2>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="container mx-auto max-w-7xl px-6 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">Control de Asistencias</h1>
+            <p class="text-muted-foreground text-lg">Registra y monitorea la asistencia de los clientes</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">89</div>
+                <div class="text-sm text-muted-foreground">Asistencias Hoy</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2">342</div>
+                <div class="text-sm text-muted-foreground">Clientes Activos</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow text-center">
+                <div class="text-3xl font-bold text-purple-600 mb-2">78%</div>
+                <div class="text-sm text-muted-foreground">Promedio Asistencia</div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-semibold">Registro de Asistencias</h3>
+                    <div class="flex gap-2">
+                        <input type="date" class="border rounded-lg px-3 py-2" [(ngModel)]="selectedDate" (change)="filterAttendances()">
+                        <button class="px-4 py-2 bg-rose-600 text-white rounded-lg" (click)="openRegisterAttendanceDialog()">Registrar Asistencia</button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3">Cliente</th>
+                                <th class="text-left py-3">Hora Entrada</th>
+                                <th class="text-left py-3">Hora Salida</th>
+                                <th class="text-left py-3">Duración</th>
+                                <th class="text-left py-3">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let attendance of filteredAttendances" class="border-b">
+                                <td class="py-3">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-rose-100 rounded-full flex items-center justify-center mr-3">
+                                            <span class="text-rose-600 text-sm font-semibold">{{ attendance.client.charAt(0) }}</span>
+                                        </div>
+                                        {{ attendance.client }}
+                                    </div>
+                                </td>
+                                <td class="py-3">{{ attendance.entryTime }}</td>
+                                <td class="py-3">{{ attendance.exitTime }}
+                                    <button *ngIf="!attendance.exitTime" class="ml-2 px-2 py-1 bg-gray-200 rounded text-xs" (click)="registerExit(attendance)">Registrar Retiro</button>
+                                </td>
+                                <td class="py-3">{{ attendance.duration }}</td>
+                                <td class="py-3">
+                                    <span class="px-2 py-1 rounded text-xs" 
+                                          [class]="attendance.status === 'Activo' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'">
+                                        {{ attendance.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

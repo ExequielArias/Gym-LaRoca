@@ -1,55 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gym LaRoca</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col">
-  <!-- Header -->
-  <header
-    class="sticky top-0 z-50 bg-white/80 dark:bg-[#111]/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-      <!-- Logo -->
-      <a
-        class="text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 hover:scale-105 transition-transform duration-300 cursor-pointer">
-        Gym LaRoca
-      </a>
-
-      <!-- Botón de iniciar sesión -->
-      <button (click)="openLogin()" class="px-6 py-2 rounded-full bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 
-         text-white font-semibold shadow-md hover:shadow-xl hover:scale-105 
-         transition-all duration-300 flex items-center gap-2">
-        <i class="pi pi-sign-in"></i>
-        <span>Iniciar sesión</span>
+<header *ngIf="!isLogged()" class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200 shadow-md">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a routerLink="/"
+      class="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 cursor-pointer">
+      Gym LaRoca
+    </a>
+    <div class="flex items-center gap-4">
+      <button (click)="openLogin()"
+        class="px-4 py-2 rounded-full bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white font-semibold shadow-md hover:shadow-xl transition-all">
+        Iniciar sesión
       </button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- Contenido enrutado -->
-  <main class="flex-1">
-    <router-outlet></router-outlet>
-  </main>
+<main class="flex-1">
+  <router-outlet></router-outlet>
+</main>
 
-  <!-- Footer (podés reutilizar el tuyo tal cual) -->
-  <footer class="bg-gray-900 text-white py-12 px-6">
-    <div class="container mx-auto max-w-6xl text-center">
-      <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
-        Gym LaRoca
-      </h3>
-      <p class="text-gray-400 text-lg mb-6">
-        Transforma tu vida hoy. Únete a nuestra comunidad.
-      </p>
-      <div class="border-t border-gray-800 pt-6 text-gray-500 text-sm">
-        <p>© 2025 Gym LaRoca. Todos los derechos reservados.</p>
-      </div>
+<footer class="bg-gray-900 text-white py-12 px-6">
+  <div class="container mx-auto max-w-6xl text-center">
+    <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+      Gym LaRoca
+    </h3>
+    <p class="text-gray-400 text-lg mb-6">Transforma tu vida hoy. Únete a nuestra comunidad.</p>
+    <div class="border-t border-gray-800 pt-6 text-gray-500 text-sm">
+      <p>© 2025 Gym LaRoca. Todos los derechos reservados.</p>
     </div>
-  </footer>
-</body>
-
-</html>
+  </div>
+</footer>
