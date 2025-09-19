@@ -10,9 +10,9 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent {
   galleryImages = [
-    { src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80', alt: 'Máquinas de entrenamiento' },
-    { src: 'https://images.unsplash.com/photo-1598228723793-52713b984737?auto=format&fit=crop&w=800&q=80', alt: 'Clase de spinning' },
-    { src: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&w=800&q=80', alt: 'Entrenamiento personal' }
+    { src: 'src/assets/fotos/maquinas.jpg', alt: 'Máquinas de entrenamiento' },
+    { src: 'src/assets/fotos/Zona-Baile.jpg', alt: 'Zona de baile' },
+    { src: 'src/assets/fotos/Patio.jpg', alt: 'Entrenamiento personal' }
   ];
 
   benefits = [

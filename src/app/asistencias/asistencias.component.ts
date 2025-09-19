@@ -3,59 +3,66 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { RegistrarAsistenciaDialogComponent } from './registrar-asistencia-dialog.component';
 
 @Component({
   selector: 'app-asistencias',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule, RegistrarAsistenciaDialogComponent],
+  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule],
   templateUrl: './asistencias.component.html',
-  styleUrl: './asistencias.component.css'
+  styleUrls: ['./asistencias.component.css']
 })
 export class AsistenciasComponent {
-  attendances = [
-    { client: 'Juan Pérez', entryTime: '2024-01-15T08:30', exitTime: '2024-01-15T10:15', duration: '1h 45m', status: 'Activo', date: '2024-01-15' },
-    { client: 'María García', entryTime: '2024-01-14T09:00', exitTime: '2024-01-14T11:30', duration: '2h 30m', status: 'Activo', date: '2024-01-14' },
-    { client: 'Carlos López', entryTime: '2024-01-16T10:15', exitTime: '2024-01-16T12:00', duration: '1h 45m', status: 'Activo', date: '2024-01-16' },
-    { client: 'Ana Martínez', entryTime: '2024-01-13T14:00', exitTime: '2024-01-13T15:30', duration: '1h 30m', status: 'Activo', date: '2024-01-13' },
-    { client: 'Luis Rodríguez', entryTime: '2024-01-12T16:00', exitTime: '2024-01-12T17:45', duration: '1h 45m', status: 'Activo', date: '2024-01-12' },
-    { client: 'Sofia Herrera', entryTime: '2024-01-16T18:30', exitTime: '2024-01-16T20:00', duration: '1h 30m', status: 'Activo', date: '2024-01-16' }
+  searchTerm = '';
+  result: any = null;
+  currentTime = new Date().toLocaleTimeString();
+  currentDate = new Date().toLocaleDateString();
+
+  // Datos simulados
+  attendanceRecords = [
+    { time: '02:12:43', client: 'Juan Carlos González', dni: '12345678', credential: 'GYM001', status: 'Permitido', notes: '' },
+    { time: '02:13:34', client: 'Juan Carlos González', dni: '12345678', credential: 'GYM001', status: 'Permitido', notes: '' },
+    { time: '02:14:07', client: 'María Elena Rodríguez', dni: '87654321', credential: 'GYM002', status: 'Denegado', notes: 'Membresía vencida' }
   ];
 
-  selectedDate: string = '';
-  filteredAttendances = [...this.attendances];
+  accessLog = [
+    { client: 'Juan Carlos González', credential: 'GYM001', time: '02:12:43', status: 'Permitido' },
+    { client: 'Juan Carlos González', credential: 'GYM001', time: '02:13:34', status: 'Permitido' },
+    { client: 'María Elena Rodríguez', credential: 'GYM002', time: '02:14:07', status: 'Denegado' }
+  ];
 
-  filterAttendances() {
-    if (!this.selectedDate) {
-      this.filteredAttendances = [...this.attendances];
-    } else {
-      this.filteredAttendances = this.attendances.filter(a => a.date === this.selectedDate);
+  totalIngress = 3;
+  allowedAccesses = 2;
+  deniedAccesses = 1;
+
+  verifyAccess() {
+    if (!this.searchTerm) return;
+
+    const mockClient = this.searchTerm === '12345678'
+      ? { client: 'Juan Carlos González', dni: '12345678', credential: 'GYM001', membership: 'Mensual', expirationDate: '14/7/2025', status: 'permitido' }
+      : this.searchTerm === '87654321'
+        ? { client: 'María Elena Rodríguez', dni: '87654321', credential: 'GYM002', membership: 'Trimestral', expirationDate: '19/6/2025', status: 'denegado' }
+        : null;
+
+    if (mockClient) {
+      this.result = mockClient;
+      this.accessLog.unshift({
+        client: mockClient.client,
+        credential: mockClient.credential,
+        time: new Date().toLocaleTimeString(),
+        status: mockClient.status === 'permitido' ? 'Permitido' : 'Denegado'
+      });
+
+      this.totalIngress++;
+      if (mockClient.status === 'permitido') {
+        this.allowedAccesses++;
+      } else {
+        this.deniedAccesses++;
+      }
     }
   }
 
-  constructor(private dialog: MatDialog) {}
-
-  openRegisterAttendanceDialog() {
-    const dialogRef = this.dialog.open(RegistrarAsistenciaDialogComponent, {
-      width: '400px'
-    });
-    dialogRef.afterClosed().subscribe((result: { cliente: string; entrada: string } | undefined) => {
-      if (result) {
-        this.attendances.push({
-          client: result.cliente,
-          entryTime: result.entrada,
-          exitTime: '',
-          duration: '',
-          status: 'Activo',
-          date: new Date().toISOString().split('T')[0]
-        });
-        this.filterAttendances();
-      }
-    });
-  }
-
-  registerExit(attendance: any) {
-    alert('Registrar retiro para: ' + attendance.client);
-    // Aquí podrías actualizar la hora de salida y duración
+  clearSearch() {
+    this.searchTerm = '';
+    this.result = null;
   }
 }
