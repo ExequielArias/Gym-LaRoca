@@ -1,79 +1,250 @@
-<div class="min-h-screen bg-background">
-    <header class="border-b bg-white px-6 py-4">
-        <div class="container mx-auto flex items-center justify-between">
-            <a routerLink="/dashboard" class="text-rose-600 font-semibold">← Dashboard</a>
-            <h2 class="font-semibold">Control de Asistencias</h2>
-            <div></div>
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b px-6 py-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Botón Volver -->
+            <a routerLink="/dashboard" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                        clip-rule="evenodd" />
+                </svg>
+                Volver
+            </a>
+
+            <!-- Título Centrado y con letras más grandes -->
+            <h1 class="text-xl md:text-2xl font-bold text-gray-900 text-center">
+                Sistema de Control de Acceso
+            </h1>
+
+            <!-- Reloj y Fecha (lado derecho) -->
+            <div class="text-right text-sm text-gray-600 min-w-[120px]">
+                <div>{{ currentTime }}</div>
+                <div>{{ currentDate }}</div>
+            </div>
         </div>
     </header>
 
-    <div class="container mx-auto max-w-7xl px-6 py-8">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">Control de Asistencias</h1>
-            <p class="text-muted-foreground text-lg">Registra y monitorea la asistencia de los clientes</p>
-        </div>
+    <!-- RESTO DEL CONTENIDO (SIN CAMBIOS) -->
+    <div class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Verificación de Acceso -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                            <path d="M10 6a2 2 0 100 4 2 2 0 000-4z" />
+                        </svg>
+                        Verificación de Acceso
+                    </h2>
+                    <p class="text-sm text-gray-500 mb-4">Ingresa el DNI o número de credencial del cliente</p>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-lg shadow text-center">
-                <div class="text-3xl font-bold text-green-600 mb-2">89</div>
-                <div class="text-sm text-muted-foreground">Asistencias Hoy</div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow text-center">
-                <div class="text-3xl font-bold text-blue-600 mb-2">342</div>
-                <div class="text-sm text-muted-foreground">Clientes Activos</div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow text-center">
-                <div class="text-3xl font-bold text-purple-600 mb-2">78%</div>
-                <div class="text-sm text-muted-foreground">Promedio Asistencia</div>
-            </div>
-        </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-grow">
+                            <input type="text" [(ngModel)]="searchTerm"
+                                placeholder="DNI o Credencial (ej: 12345678 o GYM001)"
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent" />
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <button (click)="verifyAccess()"
+                            class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors">
+                            Verificar
+                        </button>
+                    </div>
 
-        <div class="bg-white rounded-lg shadow">
-            <div class="p-6 border-b">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-xl font-semibold">Registro de Asistencias</h3>
-                    <div class="flex gap-2">
-                        <input type="date" class="border rounded-lg px-3 py-2" [(ngModel)]="selectedDate" (change)="filterAttendances()">
-                        <button class="px-4 py-2 bg-rose-600 text-white rounded-lg" (click)="openRegisterAttendanceDialog()">Registrar Asistencia</button>
+                    <!-- Clear Button -->
+                    <div class="mt-3 text-center">
+                        <button (click)="clearSearch()" class="text-xs text-gray-500 hover:text-gray-700 underline">
+                            Limpiar Búsqueda
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result Card -->
+                <div *ngIf="result && result.client"
+                    [class]="result.status === 'permitido' ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'"
+                    class="rounded-lg border-2 p-6 mb-6 transition-all duration-300">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                            [class]="result.status === 'permitido' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-2"
+                            [class]="result.status === 'permitido' ? 'text-green-700' : 'text-red-700'">
+                            {{ result.status === 'permitido' ? 'ACCESO PERMITIDO' : 'ACCESO DENEGADO' }}
+                        </h3>
+
+                        <div class="mt-4 w-full max-w-md bg-white p-4 rounded-lg shadow-sm border">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-gray-600 font-semibold">{{ result.client.charAt(0) }}</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="font-semibold text-gray-900">{{ result.client }}</h4>
+                                    <div class="text-sm text-gray-600 mt-1">
+                                        <p>DNI: {{ result.dni }}</p>
+                                        <p>Credencial: {{ result.credential }}</p>
+                                        <p>Membresía: {{ result.membership }}</p>
+                                        <p>Vencimiento: {{ result.expirationDate }}</p>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span
+                                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                                            [class]="result.status === 'permitido' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                                            {{ result.status === 'permitido' ? 'Activo' : 'Vencido' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registro Completo de Asistencias -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Registro Completo de Asistencias
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="text-left text-gray-500 uppercase tracking-wider">
+                                <tr class="border-b">
+                                    <th class="py-3">Hora</th>
+                                    <th class="py-3">Cliente</th>
+                                    <th class="py-3">DNI</th>
+                                    <th class="py-3">Credencial</th>
+                                    <th class="py-3">Estado</th>
+                                    <th class="py-3">Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let record of attendanceRecords" class="border-b last:border-b-0">
+                                    <td class="py-3">{{ record.time }}</td>
+                                    <td class="py-3">{{ record.client }}</td>
+                                    <td class="py-3">{{ record.dni }}</td>
+                                    <td class="py-3">{{ record.credential }}</td>
+                                    <td class="py-3">
+                                        <span
+                                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                                            [class]="record.status === 'Permitido' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                                            {{ record.status }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3">{{ record.notes || '-' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-3">Cliente</th>
-                                <th class="text-left py-3">Hora Entrada</th>
-                                <th class="text-left py-3">Hora Salida</th>
-                                <th class="text-left py-3">Duración</th>
-                                <th class="text-left py-3">Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let attendance of filteredAttendances" class="border-b">
-                                <td class="py-3">
-                                    <div class="flex items-center">
-                                        <div class="w-8 h-8 bg-rose-100 rounded-full flex items-center justify-center mr-3">
-                                            <span class="text-rose-600 text-sm font-semibold">{{ attendance.client.charAt(0) }}</span>
-                                        </div>
-                                        {{ attendance.client }}
-                                    </div>
-                                </td>
-                                <td class="py-3">{{ attendance.entryTime }}</td>
-                                <td class="py-3">{{ attendance.exitTime }}
-                                    <button *ngIf="!attendance.exitTime" class="ml-2 px-2 py-1 bg-gray-200 rounded text-xs" (click)="registerExit(attendance)">Registrar Retiro</button>
-                                </td>
-                                <td class="py-3">{{ attendance.duration }}</td>
-                                <td class="py-3">
-                                    <span class="px-2 py-1 rounded text-xs" 
-                                          [class]="attendance.status === 'Activo' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'">
-                                        {{ attendance.status }}
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+            <!-- Sidebar: Estadísticas y Historial -->
+            <div class="space-y-6">
+                <!-- Estadísticas de Hoy -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path
+                                d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm1 3h10v2H5V9zm0 4h10v2H5v-2z" />
+                        </svg>
+                        Estadísticas de Hoy
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                                </svg>
+                                Total Ingresos
+                            </div>
+                            <div
+                                class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-semibold">
+                                {{ totalIngress }}
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Accesos Permitidos
+                            </div>
+                            <div
+                                class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-sm font-semibold text-green-800">
+                                {{ allowedAccesses }}
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-500"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Accesos Denegados
+                            </div>
+                            <div
+                                class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-sm font-semibold text-red-800">
+                                {{ deniedAccesses }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historial de Hoy -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Historial de Hoy
+                    </h3>
+                    <div class="space-y-2">
+                        <div *ngFor="let log of accessLog"
+                            class="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                            [class]="log.status === 'Permitido' ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'">
+                            <div>
+                                <div class="font-medium text-gray-900">{{ log.client }}</div>
+                                <div class="text-sm text-gray-500">{{ log.credential }} • {{ log.time }}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                    [class]="log.status === 'Permitido' ? 'text-green-500' : 'text-red-500'" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

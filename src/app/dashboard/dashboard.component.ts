@@ -24,11 +24,11 @@ export class DashboardComponent {
     user: any;
 
     modules = [
-        { title: 'Gestión de Clientes', description: 'Registrar y administrar información de clientes', href: '/clientes', icon: '👥' },
-        { title: 'Control de Asistencias', description: 'Registrar y monitorear la asistencia de clientes', href: '/asistencias', icon: '📋' },
-        { title: 'Rutinas de Entrenamiento', description: 'Crear y asignar rutinas personalizadas', href: '/rutinas', icon: '💪' },
-        { title: 'Gestión de Pagos', description: 'Procesar pagos y generar facturas', href: '/pagos', icon: '💳' },
-        { title: 'Tienda de Productos', description: 'Gestionar inventario y ventas de productos', href: '/tienda', icon: '🛍️' }
+        { title: 'Gestión de Clientes', description: 'Registrar y administrar información de clientes', href: '/clientes'},
+        { title: 'Control de Asistencias', description: 'Registrar y monitorear la asistencia de clientes', href: '/asistencias'},
+        { title: 'Rutinas de Entrenamiento', description: 'Crear y asignar rutinas personalizadas', href: '/rutinas'},
+        { title: 'Gestión de Pagos', description: 'Procesar pagos y generar facturas', href: '/pagos'},
+        { title: 'Tienda de Productos', description: 'Gestionar inventario y ventas de productos', href: '/tienda'}
     ];
 
     stats = [

@@ -35,19 +35,21 @@ export class ClientesComponent {
     );
   }
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   openNewClientDialog() {
     const dialogRef = this.dialog.open(NuevoClienteDialogComponent, {
-      width: '400px'
+      width: '500px',
+      data: {}
     });
-    dialogRef.afterClosed().subscribe((result: { nombre: string; email: string; telefono: string; membresia: string } | undefined) => {
+
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.clients.push({
-          name: result.nombre,
-          email: result.email,
-          phone: result.telefono,
-          membership: result.membresia,
+          name: `${result.name} ${result.lastName}`,
+          email: '', // Puedes agregarlo si lo necesitas
+          phone: result.phone,
+          membership: result.membership,
           lastVisit: new Date().toISOString().split('T')[0]
         });
         this.filterClients();

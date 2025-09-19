@@ -5,10 +5,10 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <a routerLink="/" class="flex items-center space-x-2 text-rose-600">
-                        <span class="text-2xl font-bold">💪 Gym LaRoca</span>
+                        <span class="text-2xl font-bold">Gym LaRoca</span>
                     </a>
                     <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-sm font-medium">
-                        Panel Administrativo
+                        Panel de administración
                     </span>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -30,7 +30,7 @@
         <!-- Welcome Section -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                ¡Bienvenido, {{ user?.name }}! 👋
+                ¡Bienvenido, {{ user?.name }}! 
             </h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
                 Gestiona todas las operaciones del gimnasio desde este panel central. 
@@ -64,9 +64,6 @@
                    [routerLink]="module.href"
                    class="group bg-white p-8 rounded-xl shadow-sm border hover:shadow-lg hover:border-rose-200 transition-all duration-200 transform hover:-translate-y-1">
                     <div class="text-center">
-                        <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-200">
-                            {{ module.icon }}
-                        </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 group-hover:text-rose-600 transition-colors">
                             {{ module.title }}
                         </h3>

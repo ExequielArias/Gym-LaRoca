@@ -1,82 +1,573 @@
-<div class="min-h-screen bg-background">
-    <header class="border-b bg-white px-6 py-4">
-        <div class="container mx-auto flex items-center justify-between">
-            <a routerLink="/dashboard" class="text-rose-600 font-semibold">← Dashboard</a>
-            <h2 class="font-semibold">Rutinas y Asistencia</h2>
-            <div></div>
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b px-6 py-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <a routerLink="/dashboard" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                        clip-rule="evenodd" />
+                </svg>
+                Volver
+            </a>
+            <h1 class="text-xl font-bold text-gray-900 text-center flex-1">Sistema de Asignación de Rutinas</h1>
         </div>
     </header>
 
-    <div class="container mx-auto max-w-7xl px-6 py-8">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h3 class="text-xl font-bold">Rutinas de Entrenamiento</h3>
-                <p class="text-sm text-muted-foreground">Gestiona las rutinas personalizadas de los clientes</p>
-            </div>
-            <div>
-                <button (click)="isAddOpen = true" class="px-3 py-2 bg-rose-600 text-white rounded">Nueva
-                    Rutina</button>
-            </div>
+    <div class="container mx-auto px-6 py-8">
+        <!-- Tabs -->
+        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
+            <button
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                (click)="activeTab = 'search'"
+                [class]="activeTab === 'search' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd" />
+                </svg>
+                Buscar Cliente
+            </button>
+            <button
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                (click)="activeTab = 'evaluation'"
+                [class]="activeTab === 'evaluation' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fill-rule="evenodd"
+                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h2a1 1 0 100-2H7zm4 0a1 1 0 000 2h2a1 1 0 100-2h-2zm-4 4a1 1 0 000 2h2a1 1 0 100-2H7zm4 0a1 1 0 000 2h2a1 1 0 100-2h-2z"
+                        clip-rule="evenodd" />
+                </svg>
+                Evaluación
+            </button>
+            <button
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                (click)="activeTab = 'routine'"
+                [class]="activeTab === 'routine' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fill-rule="evenodd"
+                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h2a1 1 0 100-2H7zm4 0a1 1 0 000 2h2a1 1 0 100-2h-2zm-4 4a1 1 0 000 2h2a1 1 0 100-2H7zm4 0a1 1 0 000 2h2a1 1 0 100-2h-2z"
+                        clip-rule="evenodd" />
+                </svg>
+                Rutina
+            </button>
+            <button
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                (click)="activeTab = 'preview'"
+                [class]="activeTab === 'preview' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm1 3h10v2H5V9zm0 4h10v2H5v-2z"
+                        clip-rule="evenodd" />
+                </svg>
+                Vista Previa
+            </button>
         </div>
 
-        <div *ngIf="isAddOpen" class="mb-6 bg-white p-4 rounded shadow">
-            <div class="grid grid-cols-2 gap-4">
-                <input class="border p-2 rounded" placeholder="Cliente" [(ngModel)]="newRoutine.clientName">
-                <input class="border p-2 rounded" placeholder="Nombre de la rutina" [(ngModel)]="newRoutine.name">
-                <input class="border p-2 rounded" placeholder="Entrenador" [(ngModel)]="newRoutine.trainer">
-                <input class="border p-2 rounded" type="number" placeholder="Duración (minutos)" [(ngModel)]="newRoutine.duration">
-            </div>
+        <!-- Content -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <!-- Search Client -->
+            <div *ngIf="activeTab === 'search'" class="space-y-6">
+                <h2 class="text-xl font-semibold text-gray-900">Buscar Cliente</h2>
+                <p class="text-sm text-gray-500">Busca el cliente para asignar rutina personalizada</p>
 
-            <textarea class="w-full border p-2 rounded mt-3" rows="3" placeholder="Descripción"
-                [(ngModel)]="newRoutine.description"></textarea>
-
-            <div class="border rounded p-3 mt-3">
-                <h4 class="font-semibold mb-2">Agregar Ejercicio</h4>
-                <div class="grid grid-cols-3 gap-3">
-                    <input class="border p-2 rounded" placeholder="Ejercicio" [(ngModel)]="newExercise.name">
-                    <input class="border p-2 rounded" type="number" placeholder="Series" [(ngModel)]="newExercise.sets">
-                    <input class="border p-2 rounded" type="number" placeholder="Reps (solo números)" [(ngModel)]="newExercise.reps">
-                </div>
-                <div class="flex gap-2 mt-3">
-                    <button (click)="addExercise()" class="px-3 py-1 bg-rose-600 text-white rounded">Agregar</button>
+                <div class="relative">
+                    <input type="text" placeholder="Buscar cliente..."
+                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
                 </div>
 
-                <div *ngIf="newRoutine.exercises?.length" class="mt-3">
-                    <h5 class="font-medium">Ejercicios agregados</h5>
-                    <ul class="list-disc pl-5">
-                        <li *ngFor="let e of newRoutine.exercises">{{ e.name }} — {{ e.sets }} x {{ e.reps }}</li>
-                    </ul>
-                </div>
-
-                <div class="flex gap-2 mt-4">
-                    <button (click)="saveRoutine()" class="px-4 py-2 bg-green-600 text-white rounded">Guardar
-                        Rutina</button>
-                    <button (click)="isAddOpen=false" class="px-4 py-2 border rounded">Cancelar</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div *ngFor="let r of routines; let i = index" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-200">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h4 class="font-semibold">{{ r.name }}</h4>
-                        <p class="text-sm text-muted-foreground">{{ r.clientName }} • {{ r.trainer }}</p>
+                <div class="space-y-3">
+                    <div class="p-4 border border-gray-200 rounded-lg flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Juan Carlos González</h3>
+                            <p class="text-sm text-gray-500">DNI: 12345678</p>
+                            <p class="text-sm text-gray-500">Tel: 351-123-4567</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">28 años</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Sin
+                                Rutina</span>
+                        </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-sm font-bold">{{ r.duration }} min</p>
-                        <p class="text-xs text-muted-foreground">{{ r.createdDate }}</p>
-                        <div class="flex gap-2 mt-2">
-                            <button class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs" (click)="editRoutine(i)">Modificar</button>
-                            <button class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs" (click)="deleteRoutine(i)">Eliminar</button>
+
+                    <div class="p-4 border border-gray-200 rounded-lg flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">María Elena Rodríguez</h3>
+                            <p class="text-sm text-gray-500">DNI: 87654321</p>
+                            <p class="text-sm text-gray-500">Tel: 351-987-6543</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">35 años</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Sin
+                                Rutina</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-gray-200 rounded-lg flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Carlos Alberto Fernández</h3>
+                            <p class="text-sm text-gray-500">DNI: 11223344</p>
+                            <p class="text-sm text-gray-500">Tel: 351-555-0123</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-500">42 años</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Sin
+                                Rutina</span>
                         </div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <p class="text-sm">{{ r.description }}</p>
-                    <ul class="list-disc pl-5 mt-2 text-sm">
-                        <li *ngFor="let e of r.exercises">{{ e.name }} — {{ e.sets }} x {{ e.reps }}</li>
-                    </ul>
+            </div>
+
+            <!-- Evaluation -->
+            <div *ngIf="activeTab === 'evaluation'" class="space-y-6">
+                <h2 class="text-xl font-semibold text-gray-900">Evaluación Física - Juan Carlos González</h2>
+                <p class="text-sm text-gray-500">Completa la evaluación para crear una rutina personalizada</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nivel de Experiencia *</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="radio" name="experience" value="principiante" checked class="mr-2" />
+                                Principiante (0-6 meses)
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="experience" value="intermedio" class="mr-2" />
+                                Intermedio (6 meses - 2 años)
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="experience" value="avanzado" class="mr-2" />
+                                Avanzado (más de 2 años)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Objetivos (selecciona todos los
+                                que apliquen)</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="peso" checked class="mr-2" />
+                                    Pérdida de peso
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="tonificacion" class="mr-2" />
+                                    Tonificación
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="resistencia" class="mr-2" />
+                                    Resistencia
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Objetivos (selecciona todos los
+                                que apliquen)</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="ganancia" class="mr-2" />
+                                    Ganancia muscular
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="fuerza" class="mr-2" />
+                                    Fuerza
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="objective" value="rehabilitacion" class="mr-2" />
+                                    Rehabilitación
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Días disponibles para
+                                entrenar</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="lunes" checked class="mr-2" />
+                                    Lunes
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="martes" class="mr-2" />
+                                    Martes
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="miercoles" checked class="mr-2" />
+                                    Miércoles
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="jueves" class="mr-2" />
+                                    Jueves
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="viernes" checked class="mr-2" />
+                                    Viernes
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="day" value="sabado" class="mr-2" />
+                                    Sábado
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Duración por sesión</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                                <option>60 minutos</option>
+                                <option>45 minutos</option>
+                                <option>30 minutos</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Horario preferido</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                                <option>Noche (18:00 - 22:00)</option>
+                                <option>Tarde (15:00 - 18:00)</option>
+                                <option>Mañana (8:00 - 12:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Limitaciones o lesiones</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg" rows="3"
+                            placeholder="Describe cualquier limitación física, lesión previa o restricción médica..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Condiciones médicas</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg" rows="3"
+                            placeholder="Menciona cualquier condición médica relevante (diabetes, hipertensión, etc.)..."></textarea>
+                    </div>
+
+                    <button
+                        class="w-full px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Generar Rutina Personalizada
+                    </button>
+                </div>
+            </div>
+
+            <!-- Routine -->
+            <div *ngIf="activeTab === 'routine'" class="space-y-6">
+                <h2 class="text-xl font-semibold text-gray-900">Rutina Personalizada - Juan Carlos</h2>
+                <p class="text-sm text-gray-500">Rutina principiante - 60 min por sesión</p>
+
+                <div class="space-y-4">
+                    <div class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-semibold text-gray-900">Lunes - Pecho y Triceps</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Press de Banca</p>
+                                        <p class="text-sm text-gray-500">Ejercicio básico para desarrollo del pecho</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Pecho</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">12-15 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 60-90 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Press Inclinado con Mancuernas</p>
+                                        <p class="text-sm text-gray-500">Trabajo del pecho superior</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Mancuernas</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Pecho</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">10-12 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 60 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Press Francés</p>
+                                        <p class="text-sm text-gray-500">Ejercicio para tríceps</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Brazos</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">12-15 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 45 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-semibold text-gray-900">Miércoles - Espalda y Biceps</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Press de Banca</p>
+                                        <p class="text-sm text-gray-500">Ejercicio básico para desarrollo del pecho</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Pecho</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">12-15 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 90 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Remo con Barra</p>
+                                        <p class="text-sm text-gray-500">Desarrollo de la espalda media</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Espalda</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">10-12 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 60 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Curl de Biceps</p>
+                                        <p class="text-sm text-gray-500">Ejercicio aislado para biceps</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Mancuernas</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Brazos</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">12-15 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 45 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-semibold text-gray-900">Viernes - Piernas</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Press de Banca</p>
+                                        <p class="text-sm text-gray-500">Ejercicio básico para desarrollo del pecho</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Pecho</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">15-20 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 90 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-medium">Peso Muerto</p>
+                                        <p class="text-sm text-gray-500">Ejercicio completo para tren inferior</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs bg-gray-100 px-2 py-1 rounded">Barra</span>
+                                            <span class="text-xs text-gray-500">•</span>
+                                            <span class="text-xs bg-rose-100 px-2 py-1 rounded">Piernas</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium">3 series</p>
+                                        <p class="text-xs text-gray-500">12-15 reps</p>
+                                        <p class="text-xs text-gray-500">⏱️ 90 seg</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-gray-700"><strong>Notas importantes:</strong> Objetivos: Pérdida de peso
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-6">
+                    <button
+                        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm1 3h10v2H5V9zm0 4h10v2H5v-2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Vista Previa
+                    </button>
+                    <button
+                        class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Guardar Rutina
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div *ngIf="activeTab === 'preview'" class="space-y-6">
+                <h2 class="text-xl font-semibold text-gray-900">Vista Previa de Rutina</h2>
+                <p class="text-sm text-gray-500">Formato para imprimir o enviar por WhatsApp</p>
+
+                <div class="bg-gray-50 p-6 rounded-lg overflow-auto max-h-96">
+                    <pre class="whitespace-pre-wrap text-sm text-gray-800">
+==================================================
+GIMNASIO CÓRDOBA
+==================================================
+RUTINA PERSONALIZADA
+==================================================
+
+Cliente: Juan Carlos González
+DNI: 12345678
+Fecha: 24/6/2025
+Tipo: PRINCIPIANTE
+Duración por sesión: 60 min
+
+==================================================
+
+LUNES - Pecho y Triceps
+----------------------
+
+✓ Press de Banca
+  Ejercicio básico para desarrollo del pecho
+  3 series | 12-15 reps | ⏎ 60-90 seg
+  Barra • Pecho
+
+✓ Press Inclinado con Mancuernas
+  Trabajo del pecho superior
+  3 series | 10-12 reps | ⏎ 60 seg
+  Mancuernas • Pecho
+
+✓ Press Francés
+  Ejercicio para tríceps
+  3 series | 12-15 reps | ⏎ 45 seg
+  Barra • Brazos
+
+--------------------------------------------------
+
+MIÉRCOLES - Espalda y Biceps
+----------------------------
+
+✓ Press de Banca
+  Ejercicio básico para desarrollo del pecho
+  3 series | 12-15 reps | ⏎ 90 seg
+  Barra • Pecho
+
+✓ Remo con Barra
+  Desarrollo de la espalda media
+  3 series | 10-12 reps | ⏎ 60 seg
+  Barra • Espalda
+
+✓ Curl de Biceps
+  Ejercicio aislado para biceps
+  3 series | 12-15 reps | ⏎ 45 seg
+  Mancuernas • Brazos
+
+--------------------------------------------------
+
+VIERNES - Piernas
+-----------------
+
+✓ Press de Banca
+  Ejercicio básico para desarrollo del pecho
+  3 series | 15-20 reps | ⏎ 90 seg
+  Barra • Pecho
+
+✓ Peso Muerto
+  Ejercicio completo para tren inferior
+  3 series | 12-15 reps | ⏎ 90 seg
+  Barra • Piernas
+
+--------------------------------------------------
+
+Notas importantes:
+Objetivos: Pérdida de peso
+          </pre>
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                    <button
+                        class="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Imprimir
+                    </button>
+                    <button
+                        class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 012 0v1a1 1 0 11-2 0V7zM10 9a1 1 0 00-1 1v1a1 1 0 102 0V10a1 1 0 00-1-1zm0 4a1 1 0 00-1 1v1a1 1 0 102 0v-1a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Enviar por WhatsApp
+                    </button>
                 </div>
             </div>
         </div>
