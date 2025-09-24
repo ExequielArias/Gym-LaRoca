@@ -8,7 +8,7 @@ import { NuevoClienteDialogComponent } from './nuevo-cliente-dialog.component';
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule, NuevoClienteDialogComponent],
+  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -39,7 +39,7 @@ export class ClientesComponent {
 
   openNewClientDialog() {
     const dialogRef = this.dialog.open(NuevoClienteDialogComponent, {
-      width: '500px',
+      width: '800px',
       data: {}
     });
 
@@ -47,7 +47,7 @@ export class ClientesComponent {
       if (result) {
         this.clients.push({
           name: `${result.name} ${result.lastName}`,
-          email: '', // Puedes agregarlo si lo necesitas
+          email: '',
           phone: result.phone,
           membership: result.membership,
           lastVisit: new Date().toISOString().split('T')[0]
