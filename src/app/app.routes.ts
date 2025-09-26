@@ -24,8 +24,8 @@ export const routes: Routes = [
   { path: '**', redirectTo: '' }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+// @NgModule({
+//   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+//   exports: [RouterModule]
+// })
+// export class AppRoutingModule { }
