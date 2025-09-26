@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { LoginComponent } from '../auth/login/login-dialog/login-dialog.component';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, RouterModule],
-  templateUrl: './home.component.html'
+  imports: [CommonModule, RouterModule, MatDialogModule, LoginComponent],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  galleryImages = [
-    { src: 'src/assets/fotos/maquinas.jpg', alt: 'Máquinas de entrenamiento' },
-    { src: 'src/assets/fotos/Zona-Baile.jpg', alt: 'Zona de baile' },
-    { src: 'src/assets/fotos/Patio.jpg', alt: 'Entrenamiento personal' }
-  ];
+  // Estado del modo oscuro
+  isDarkMode = false;
+
+  constructor(private dialog: MatDialog) { }
 
   benefits = [
-    { icon: '💪', text: 'Más de 100 equipos de entrenamiento' },
-    { icon: '👥', text: 'Clases grupales: yoga, spinning, zumba' },
-    { icon: '🧃', text: 'Barra de batidos y suplementos' },
-    { icon: '🛡️', text: 'Duchas, lockers y toallas gratuitas' },
-    { icon: '⏰', text: 'Horario ampliado: 5 AM - 11 PM' }
+    { icon: '💪', title: 'Más de 100 equipos', text: 'Máquinas de última generación para todos los niveles.' },
+    { icon: '👥', title: 'Clases grupales', text: 'Yoga, spinning, zumba y más para mantenerte motivado.' },
+    { icon: '🧃', title: 'Suplementos', text: 'Barra de batidos y productos nutricionales profesionales.' },
+    { icon: '🛡️', title: 'Comodidades', text: 'Duchas, lockers y toallas gratuitas para tu comodidad.' },
+    { icon: '⏰', title: 'Horarios flexibles', text: 'Acceso 24/7 para adaptarse a tu rutina.' }
   ];
 
   stats = [
@@ -31,15 +33,41 @@ export class HomeComponent {
   ];
 
   trainers = [
-    { name: 'Carlos Mendoza', specialty: 'Entrenamiento de Fuerza' },
-    { name: 'Ana García', specialty: 'Fitness Funcional' },
-    { name: 'Miguel Torres', specialty: 'Rehabilitación Deportiva' }
+    { name: 'Carlos Mendoza', specialty: 'Entrenamiento de Fuerza', image: 'assets/fotos/entrenador1.jpg' },
+    { name: 'Ana García', specialty: 'Fitness Funcional', image: 'assets/fotos/entrenadora1.jpg' },
+    { name: 'Miguel Torres', specialty: 'Rehabilitación Deportiva', image: 'assets/fotos/entrenador2.jpg' }
   ];
 
   products = [
-    { name: 'Proteína Whey', price: '$45.000' },
-    { name: 'Creatina Monohidrato', price: '$25.000' },
-    { name: 'Camiseta Gym LaRoca', price: '$18.000' },
-    { name: 'Shaker Premium', price: '$12.000' }
+    { name: 'Proteína Whey', description: 'Proteína de suero de leche, sabor chocolate', image: 'assets/fotos/proteina.png' },
+    { name: 'Creatina Monohidrato', description: 'Creatina pura para aumentar fuerza y masa muscular', image: 'assets/fotos/creatina.png' },
+    { name: 'Camiseta Gym LaRoca', description: 'Remera de poliéster, tecnología dry-fit', image: 'assets/fotos/remera.png' },
+    { name: 'Shaker Premium', description: 'Botella mezcladora de 750ml', image: 'assets/fotos/shaker.png' }
   ];
+
+  // Alternar modo oscuro
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    const html = document.documentElement;
+    if (this.isDarkMode) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }
+
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '400px',
+    });
+
+    // ✅ Maneja lo que sucede cuando se cierra el diálogo
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Diálogo de login cerrado', result);
+
+      // Si el login fue exitoso, el componente LoginComponent ya debería navegar
+      // o el guard ya debería estar activo. No necesitas navegar aquí.
+      // Si result es undefined, significa que se cerró sin hacer login
+    });
+  }
 }
