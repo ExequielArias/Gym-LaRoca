@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -21,7 +21,7 @@ export class DashboardComponent {
     quickAddClient() {
         alert('Abrir diálogo para agregar cliente');
     }
-    user: any;
+    user = computed(() => this.auth.getCurrentUser());
 
     modules = [
         { title: 'Gestión de Clientes', description: 'Registrar y administrar información de clientes', href: '/clientes'},
@@ -38,9 +38,7 @@ export class DashboardComponent {
         { label: 'Nuevos Miembros', value: '23', change: '+8%' }
     ];
 
-    constructor(private auth: AuthService) { 
-        this.user = this.auth.getCurrentUser();
-    }
+    constructor(private auth: AuthService) {}
 
     logout() {
         this.auth.logout();

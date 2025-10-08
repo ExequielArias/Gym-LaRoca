@@ -41,21 +41,34 @@ export class LoginComponent {
     this.error = '';
 
     try {
-      // ✅ Llama a tu servicio de autenticación
-      const success = await this.authService.login(this.email, this.password);
+      const result = await this.authService.login(this.email, this.password);
       this.isLoading = false;
 
-      if (success) {
-        console.log('Login exitoso');
-        this.dialogRef.close(); // Cierra el diálogo
-        // ✅ Navega a /dashboard
+      if (result === true) {
+        this.dialogRef.close();
         this.router.navigateByUrl('/dashboard');
+      } else if (typeof result === 'string') {
+        // Personaliza los mensajes de error de Supabase
+        if (result.toLowerCase().includes('invalid login credentials')) {
+          this.error = 'Usuario o contraseña incorrectos.';
+        } else if (result.toLowerCase().includes('user not found')) {
+          this.error = 'El usuario no existe.';
+        } else if (result.toLowerCase().includes('email not confirmed')) {
+          this.error = 'Debes confirmar tu correo electrónico antes de iniciar sesión.';
+        } else {
+          this.error = result;
+        }
       } else {
-        this.error = 'Credenciales incorrectas. Intente: admin@gymlaroca.com / admin123';
+        this.error = 'Credenciales incorrectas o usuario no registrado.';
       }
-    } catch (err) {
+    } catch (err: any) {
       this.isLoading = false;
-      this.error = 'Error de conexión. Intente nuevamente.';
+      // Si Supabase devuelve un mensaje de error, mostrarlo
+      if (err?.message) {
+        this.error = err.message;
+      } else {
+        this.error = 'Error de conexión. Intente nuevamente.';
+      }
       console.error(err);
     }
   }
