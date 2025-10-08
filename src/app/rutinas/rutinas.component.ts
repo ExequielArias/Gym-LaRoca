@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { supabase } from '../supabase.client';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -12,9 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   templateUrl: './rutinas.component.html',
   styleUrls: ['./rutinas.component.css']
 })
-
 export class RutinasComponent implements OnInit {
-  // ...existing code...
+  @ViewChild('previewContent', { static: false }) previewContent!: ElementRef;
 
   // Eliminar la rutina del cliente en Supabase
   async eliminarRutina() {
@@ -95,14 +94,131 @@ export class RutinasComponent implements OnInit {
     await this.loadClients();
   }
 
-  // Descargar rutina como PDF (placeholder)
-  descargarPDF() {
-    alert('Funcionalidad de descarga PDF aún no implementada.');
+
+  // Descargar rutina como PDF personalizado
+  async descargarPDF() {
+    const jsPDF = (await import('jspdf')).jsPDF;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const imgUrl = 'https://cycbwbiszlojxhyovpfu.supabase.co/storage/v1/object/public/imagenes/fotos/iconoDos.png';
+    // Cargar imagen para logo y marca de agua
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = imgUrl;
+    await new Promise(resolve => { img.onload = resolve; });
+
+
+    // Marca de agua: fondo muy claro y realmente transparente
+    // Convertir imagen a canvas y aplicar alpha
+    function getAlphaImage(img: HTMLImageElement, width: number, height: number, alpha: number): string {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d')!;
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(img, 0, 0, width, height);
+      return canvas.toDataURL('image/png');
+    }
+    const marcaAguaDataUrl = getAlphaImage(img, 150, 150, 0.08);
+    doc.addImage(marcaAguaDataUrl, 'PNG', 30, 60, 150, 150, '', 'NONE');
+
+
+  // Encabezado con logo y título centrados y color rojo
+  // Rojo tailwind red-600
+  doc.setFillColor(220, 38, 38);
+  doc.roundedRect(0, 0, pageWidth, 28, 0, 0, 'F');
+  // Centrar logo y texto
+  const logoW = 18, logoH = 18;
+  const centerX = pageWidth / 2;
+  // Logo a la izquierda del centro, texto a la derecha
+  const text = 'Gym LaRoca';
+  doc.setFontSize(22);
+  doc.setFont('helvetica', 'bold');
+  const textWidth = doc.getTextWidth(text);
+  const totalWidth = logoW + 6 + textWidth;
+  const logoX = centerX - (totalWidth / 2);
+  const textX = logoX + logoW + 6 + textWidth / 2;
+  doc.addImage(img, 'PNG', logoX, 5, logoW, logoH, '', 'NONE');
+  doc.setTextColor(255,255,255);
+  doc.text(text, textX, 18, { align: 'center' });
+
+  // Subtítulo
+  doc.setFontSize(15);
+  doc.setTextColor(220, 38, 38);
+  doc.setFont('helvetica', 'bold');
+  doc.text(`Rutina para: ${this.clientePreview?.name || ''}`, pageWidth/2, 38, { align: 'center' });
+
+    // Objetivo
+    let y = 50;
+    doc.setFontSize(13);
+    doc.setTextColor(60,60,60);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Objetivo:', 20, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text(this.rutinaPreview?.objetivo || '', 45, y);
+    y += 10;
+
+    // Rutina por días
+    if (this.rutinaPreview?.ejercicios) {
+      for (const dia of this.rutinaPreview.ejercicios) {
+        // Más espacio antes del bloque de día
+        y += 6;
+        doc.setDrawColor(34, 58, 170);
+        doc.setLineWidth(0.5);
+        doc.roundedRect(15, y-4, pageWidth-30, 8, 2, 2, 'S');
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(220, 38, 38);
+    doc.text(`Día: ${dia.dia}`, 20, y+2);
+  y += 12;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(60,60,60);
+        for (const ejercicio of dia.ejercicios) {
+          let texto = `• ${ejercicio.nombre}`;
+          if (ejercicio.detalle) texto += ` (${ejercicio.detalle})`;
+          doc.text(texto, 28, y);
+          y += 7;
+          if (y > pageHeight - 30) {
+            // Pie de página
+            doc.setFontSize(9);
+            doc.setTextColor(180,180,180);
+            doc.text('Documento generado automáticamente por Gym LaRoca', pageWidth/2, pageHeight-10, { align: 'center' });
+            doc.addPage();
+            // Marca de agua en cada página
+            doc.addImage(img, 'PNG', 30, 60, 150, 150, '', 'NONE', 0.08);
+            y = 30;
+          }
+        }
+        y += 8;
+      }
+    }
+
+    // Pie de página
+    doc.setFontSize(9);
+    doc.setTextColor(180,180,180);
+    doc.text('Documento generado automáticamente por Gym LaRoca', pageWidth/2, pageHeight-10, { align: 'center' });
+
+    doc.save(`Rutina_${this.clientePreview?.name || 'cliente'}.pdf`);
   }
 
-  // Enviar rutina por WhatsApp (placeholder)
+  // Enviar rutina por WhatsApp
   enviarWhatsApp() {
-    alert('Funcionalidad de envío por WhatsApp aún no implementada.');
+    if (!this.rutinaPreview || !this.clientePreview) {
+      alert('No hay rutina para enviar.');
+      return;
+    }
+    let mensaje = `*Rutina de ${this.clientePreview.name}*\n`;
+    mensaje += `Objetivo: ${this.rutinaPreview.objetivo}\n`;
+    for (const dia of this.rutinaPreview.ejercicios) {
+      mensaje += `\n*${dia.dia}*\n`;
+      for (const ejercicio of dia.ejercicios) {
+        mensaje += `- ${ejercicio.nombre}`;
+        if (ejercicio.detalle) mensaje += ` (${ejercicio.detalle})`;
+        mensaje += '\n';
+      }
+    }
+    const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
   }
   clients: any[] = [];
   searchTerm: string = '';
