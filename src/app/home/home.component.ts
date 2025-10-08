@@ -18,11 +18,11 @@ export class HomeComponent {
   constructor(private dialog: MatDialog) { }
 
   benefits = [
-    { icon: '💪', title: 'Más de 100 equipos', text: 'Máquinas de última generación para todos los niveles.' },
-    { icon: '👥', title: 'Clases grupales', text: 'Yoga, spinning, zumba y más para mantenerte motivado.' },
-    { icon: '🧃', title: 'Suplementos', text: 'Barra de batidos y productos nutricionales profesionales.' },
-    { icon: '🛡️', title: 'Comodidades', text: 'Duchas, lockers y toallas gratuitas para tu comodidad.' },
-    { icon: '⏰', title: 'Horarios flexibles', text: 'Acceso 24/7 para adaptarse a tu rutina.' }
+    { title: 'Más de 100 equipos', text: 'Máquinas de última generación para todos los niveles.' },
+    { title: 'Clases grupales', text: 'Yoga, spinning, zumba y más para mantenerte motivado.' },
+    { title: 'Suplementos', text: 'Barra de batidos y productos nutricionales profesionales.' },
+    { title: 'Comodidades', text: 'Duchas, lockers y toallas gratuitas para tu comodidad.' },
+    { title: 'Horarios flexibles', text: 'Acceso 24/7 para adaptarse a tu rutina.' }
   ];
 
   stats = [

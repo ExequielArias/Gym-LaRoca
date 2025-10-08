@@ -1,118 +1,79 @@
-<h2 mat-dialog-title class="text-xl font-bold text-gray-900">Inscripción de Nuevo Cliente</h2>
-<div mat-dialog-content class="p-8 bg-white rounded-lg shadow-sm">
-    <p class="text-sm text-gray-500 mb-6">Complete todos los campos para registrar un nuevo socio del gimnasio</p>
-
-    <!-- Datos Personales -->
-    <div class="space-y-4 mb-6">
-        <h3 class="font-semibold text-gray-900">Datos Personales</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre/s *</label>
-                <input type="text" id="name" [(ngModel)]="client.name" name="name" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                    placeholder="Ej: Juan Carlos" />
-            </div>
-            <div>
-                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellido/s *</label>
-                <input type="text" id="lastName" [(ngModel)]="client.lastName" name="lastName" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                    placeholder="Ej: González Pérez" />
-            </div>
-            <div>
-                <label for="dni" class="block text-sm font-medium text-gray-700 mb-1">DNI *</label>
-                <input type="text" id="dni" [(ngModel)]="client.dni" name="dni" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                    placeholder="Ej: 12345678" />
-            </div>
-            <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono *</label>
-                <input type="text" id="phone" [(ngModel)]="client.phone" name="phone" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                    placeholder="Ej: 351-123-4567" />
+<div class="w-full h-full bg-white rounded-none shadow-none p-0 m-0">
+    <div class="bg-gradient-to-r from-rose-500 to-pink-400 px-8 py-6 rounded-none">
+        <h2 class="text-2xl font-extrabold text-white tracking-tight mb-1">Inscripción de Nuevo Cliente</h2>
+        <p class="text-sm text-rose-100">Complete todos los campos para registrar un nuevo socio del gimnasio</p>
+    </div>
+    <div class="p-6 md:p-8">
+        <!-- Datos Personales -->
+        <div class="mb-8">
+            <h3 class="font-semibold text-gray-900 mb-4 text-lg flex items-center gap-2">
+                <svg class="h-6 w-6 text-rose-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Datos Personales
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                    <input type="text" id="name" [(ngModel)]="client.name" name="name" required
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        placeholder="Nombre/s *" />
+                    <label for="name"
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Nombre/s
+                        *</label>
+                </div>
+                <div class="relative">
+                    <input type="text" id="lastName" [(ngModel)]="client.lastName" name="lastName" required
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        placeholder="Apellido/s *" />
+                    <label for="lastName"
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Apellido/s
+                        *</label>
+                </div>
+                <div class="relative">
+                    <input type="text" id="dni" [(ngModel)]="client.dni" name="dni" required
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        placeholder="DNI *" />
+                    <label for="dni"
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">DNI
+                        *</label>
+                </div>
+                <div class="relative">
+                    <input type="text" id="phone" [(ngModel)]="client.phone" name="phone" required
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        placeholder="Teléfono *" />
+                    <label for="phone"
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Teléfono
+                        *</label>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Tipo de Membresía -->
-    <div class="mb-6">
-        <h3 class="font-semibold text-gray-900">Tipo de Membresía</h3>
-        <p class="text-sm text-gray-500 mb-2">Seleccionar Plan *</p>
-        <mat-form-field appearance="outline" class="w-full"
-            style="background: white; border: 1px solid #d1d5db; border-radius: 0.5rem;">
-            <mat-label>Eligir tipo de membresía</mat-label>
-            <mat-select [(value)]="client.membership" required panelClass="solid-panel">
-                <mat-option value="Básica">Básica</mat-option>
-                <mat-option value="Premium">Premium</mat-option>
-                <mat-option value="VIP">VIP</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <!-- Método de Pago -->
-    <div class="mb-6">
-        <h3 class="font-semibold text-gray-900">Método de Pago</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
-            <button (click)="paymentMethod = 'efectivo'"
-                [class]="paymentMethod === 'efectivo' ? 'border-2 border-green-500 bg-green-50' : 'border border-gray-300'"
-                class="p-4 rounded-lg flex flex-col items-center justify-center transition-colors">
-                <!-- Ícono de billete de dinero (efectivo) -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500 mb-2" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path
-                        d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm1 3h10v2H5V9zm0 4h10v2H5v-2z" />
+        <!-- Tipo de Membresía (solo Pase Libre) -->
+        <div class="mb-6">
+            <h3 class="font-semibold text-gray-900">Tipo de Membresía</h3>
+            <div class="w-full flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4 -4" />
                 </svg>
-                <span class="font-medium">Efectivo</span>
-                <span class="text-xs text-gray-500">Pago en caja</span>
-            </button>
+                <span class="text-lg font-semibold text-green-700">Pase Libre</span>
+            </div>
+        </div>
 
-            <button (click)="paymentMethod = 'transferencia'"
-                [class]="paymentMethod === 'transferencia' ? 'border-2 border-blue-500 bg-blue-50' : 'border border-gray-300'"
-                class="p-4 rounded-lg flex flex-col items-center justify-center transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500 mb-2" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
-                        clip-rule="evenodd" />
-                </svg>
-                <span class="font-medium">Transferencia</span>
-                <span class="text-xs text-gray-500">Banco/Mercado Pago</span>
-            </button>
-
-            <button (click)="paymentMethod = 'debito'"
-                [class]="paymentMethod === 'debito' ? 'border-2 border-purple-500 bg-purple-50' : 'border border-gray-300'"
-                class="p-4 rounded-lg flex flex-col items-center justify-center transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-500 mb-2" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path
-                        d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm1 3h10v2H5V9zm0 4h10v2H5v-2z" />
-                </svg>
-                <span class="font-medium">Tarjeta Débito</span>
-                <span class="text-xs text-gray-500">Visa/Mastercard</span>
+        <!-- Botón Registrar -->
+        <div class="flex justify-center">
+            <button (click)="saveClient()"
+                class="px-6 py-3 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 transition-colors w-full">
+                Registrar Inscripción
             </button>
         </div>
-    </div>
 
-    <!-- Datos para Transferencia -->
-    <div *ngIf="paymentMethod === 'transferencia'" class="bg-blue-50 p-4 rounded-lg mb-6">
-        <h4 class="font-medium text-blue-800 mb-2">Datos para Transferencia:</h4>
-        <div class="text-sm text-blue-700 space-y-1">
-            <p><strong>CBU:</strong> 000003100010000000001</p>
-            <p><strong>Alias:</strong> GIMNASIO.CORDOBA</p>
-            <p><strong>Titular:</strong> Gimnasio Córdoba S.R.L.</p>
+        <!-- Aviso -->
+        <div class="mt-4 text-center text-xs text-gray-500">
+            Al registrarse, el cliente acepta los términos y condiciones del gimnasio.<br>
+            Los campos marcados con (*) son obligatorios.
         </div>
-    </div>
-
-    <!-- Botón Registrar -->
-    <div class="flex justify-center">
-        <button (click)="saveClient()"
-            class="px-6 py-3 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 transition-colors w-full">
-            Registrar Inscripción
-        </button>
-    </div>
-
-    <!-- Aviso -->
-    <div class="mt-4 text-center text-xs text-gray-500">
-        Al registrarse, el cliente acepta los términos y condiciones del gimnasio.<br>
-        Los campos marcados con (*) son obligatorios.
     </div>
 </div>
