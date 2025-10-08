@@ -67,17 +67,24 @@ export class NuevoClienteDialogComponent {
         return;
       }
 
+      // Calcular fecha de vencimiento sumando los meses pagados
+      const mesesPagados = pagoResult.meses || 1;
+      const fechaPago = new Date();
+      const fechaVencimiento = new Date(fechaPago);
+      fechaVencimiento.setMonth(fechaVencimiento.getMonth() + mesesPagados);
+
       // Registrar el pago en la tabla pagos
       const clienteId = clienteData[0].id;
-      const fechaPago = new Date().toISOString();
-      const periodo = `${new Date().getFullYear()}-${(new Date().getMonth()+1).toString().padStart(2,'0')}`;
+      const periodo = `${fechaPago.getFullYear()}-${(fechaPago.getMonth()+1).toString().padStart(2,'0')}`;
       const { error: pagoError } = await supabase.from('pagos').insert([
         {
           cliente_id: clienteId,
-          fecha_pago: fechaPago,
+          fecha_pago: fechaPago.toISOString(),
           monto: pagoResult.monto,
           periodo: periodo,
-          metodo_pago: pagoResult.metodo
+          metodo_pago: pagoResult.metodo,
+          meses_pagados: mesesPagados,
+          fecha_vencimiento: fechaVencimiento.toISOString().split('T')[0] // solo fecha
         }
       ]);
       if (pagoError) {

@@ -1,7 +1,8 @@
-import { Component, computed, signal, effect } from '@angular/core';
+import { Component, computed, signal, effect, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService, User } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { supabase } from './supabase.client';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   currentUser = signal<User | null>(null);
   isLogged = computed(() => !!this.currentUser());
 
@@ -19,6 +20,29 @@ export class AppComponent {
     effect(() => {
       this.currentUser.set(this.auth.getCurrentUser());
     });
+  }
+
+  async ngOnInit() {
+    // Buscar la URL del icono desde la tabla imagenes por nombre
+    const { data, error } = await supabase
+      .from('imagenes')
+      .select('url')
+      .eq('nombre', 'icono-LaRoca')
+      .single();
+    if (data && data.url) {
+      this.setFavicon(data.url);
+    }
+  }
+
+  setFavicon(url: string) {
+    let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.type = 'image/x-icon';
+    link.href = url;
   }
 
   openLogin() {

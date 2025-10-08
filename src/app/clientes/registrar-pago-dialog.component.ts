@@ -14,6 +14,7 @@ export class RegistrarPagoDialogComponent {
   monto: number | null = null;
   metodo: 'efectivo' | 'transferencia' = 'efectivo';
   pagoRealizado: boolean | null = null;
+  meses: number = 1;
 
   constructor(
     public dialogRef: MatDialogRef<RegistrarPagoDialogComponent>,
@@ -29,10 +30,15 @@ export class RegistrarPagoDialogComponent {
       alert('Debe ingresar el monto pagado.');
       return;
     }
+    if (this.pagoRealizado && (this.meses === null || this.meses < 1)) {
+      alert('Debe ingresar la cantidad de meses a pagar (mínimo 1).');
+      return;
+    }
     if (this.pagoRealizado) {
       this.dialogRef.close({
         monto: this.monto,
         metodo: this.metodo,
+        meses: this.meses,
         pagoRealizado: true
       });
     } else {

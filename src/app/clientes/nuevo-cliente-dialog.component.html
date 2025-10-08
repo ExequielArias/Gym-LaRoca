@@ -1,13 +1,13 @@
 <div class="w-full h-full bg-white rounded-none shadow-none p-0 m-0">
-    <div class="bg-gradient-to-r from-rose-500 to-pink-400 px-8 py-6 rounded-none">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-400 px-8 py-6 rounded-none">
         <h2 class="text-2xl font-extrabold text-white tracking-tight mb-1">Inscripción de Nuevo Cliente</h2>
-        <p class="text-sm text-rose-100">Complete todos los campos para registrar un nuevo socio del gimnasio</p>
+        <p class="text-sm text-blue-100">Complete todos los campos para registrar un nuevo socio del gimnasio</p>
     </div>
     <div class="p-6 md:p-8">
         <!-- Datos Personales -->
         <div class="mb-8">
             <h3 class="font-semibold text-gray-900 mb-4 text-lg flex items-center gap-2">
-                <svg class="h-6 w-6 text-rose-500" fill="none" stroke="currentColor" stroke-width="2"
+                <svg class="h-6 w-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -17,34 +17,34 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="relative">
                     <input type="text" id="name" [(ngModel)]="client.name" name="name" required
-                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-transparent"
                         placeholder="Nombre/s *" />
                     <label for="name"
-                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Nombre/s
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-blue-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Nombre/s
                         *</label>
                 </div>
                 <div class="relative">
                     <input type="text" id="lastName" [(ngModel)]="client.lastName" name="lastName" required
-                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-transparent"
                         placeholder="Apellido/s *" />
                     <label for="lastName"
-                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Apellido/s
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-blue-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Apellido/s
                         *</label>
                 </div>
                 <div class="relative">
                     <input type="text" id="dni" [(ngModel)]="client.dni" name="dni" required
-                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-transparent"
                         placeholder="DNI *" />
                     <label for="dni"
-                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">DNI
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-blue-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">DNI
                         *</label>
                 </div>
                 <div class="relative">
                     <input type="text" id="phone" [(ngModel)]="client.phone" name="phone" required
-                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent placeholder-transparent"
+                        class="peer w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-transparent"
                         placeholder="Teléfono *" />
                     <label for="phone"
-                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-rose-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Teléfono
+                        class="absolute left-4 top-2 text-gray-500 text-xs transition-all peer-focus:-top-4 peer-focus:text-blue-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400">Teléfono
                         *</label>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         <!-- Botón Registrar -->
         <div class="flex justify-center">
             <button (click)="saveClient()"
-                class="px-6 py-3 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 transition-colors w-full">
+                class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors w-full">
                 Registrar Inscripción
             </button>
         </div>

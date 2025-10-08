@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { supabase } from '../supabase.client';
+import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login-dialog/login-dialog.component';
@@ -7,11 +8,23 @@ import { LoginComponent } from '../auth/login/login-dialog/login-dialog.componen
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, RouterModule, MatDialogModule, LoginComponent],
+  imports: [CommonModule, NgIf, RouterModule, MatDialogModule, LoginComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  imagenZonaPiernas: string | null = null;
+  async ngOnInit() {
+    // Buscar la imagen 'zona-piernas' en la tabla imagenes
+    const { data, error } = await supabase
+      .from('imagenes')
+      .select('url')
+      .eq('nombre', 'zona-piernas')
+      .single();
+    if (data && data.url) {
+      this.imagenZonaPiernas = data.url;
+    }
+  }
   // Estado del modo oscuro
   isDarkMode = false;
 

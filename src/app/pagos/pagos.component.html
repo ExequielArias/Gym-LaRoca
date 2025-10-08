@@ -3,7 +3,7 @@
     <header class="bg-white border-b px-6 py-4 shadow-sm">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Botón Volver (lado izquierdo) -->
-            <a routerLink="/dashboard" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+            <a routerLink="/dashboard" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
@@ -13,7 +13,7 @@
             </a>
 
             <!-- Título Centrado (en el medio) -->
-            <h1 class="text-xl font-bold text-gray-900 text-center flex-1">Sistema de Registro de Pagos</h1>
+            <h1 class="text-xl font-bold text-blue-700 text-center flex-1">Sistema de Registro de Pagos</h1>
 
             <!-- Espacio vacío a la derecha para mantener el equilibrio -->
             <div class="min-w-[120px]"></div>
@@ -24,9 +24,9 @@
         <!-- Tabs -->
         <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
             <button
-                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 transition-colors"
                 (click)="activeTab = 'search'"
-                [class]="activeTab === 'search' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                [class]="activeTab === 'search' ? 'text-blue-600 border-b-2 border-blue-600' : ''">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -35,9 +35,9 @@
                 Buscar Cliente
             </button>
             <button
-                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 transition-colors"
                 (click)="activeTab = 'profile'"
-                [class]="activeTab === 'profile' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                [class]="activeTab === 'profile' ? 'text-blue-600 border-b-2 border-blue-600' : ''">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
                     <path d="M10 6a2 2 0 100 4 2 2 0 000-4z" />
@@ -45,9 +45,9 @@
                 Perfil del Cliente
             </button>
             <button
-                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 transition-colors"
                 (click)="activeTab = 'history'"
-                [class]="activeTab === 'history' ? 'text-rose-600 border-b-2 border-rose-600' : ''">
+                [class]="activeTab === 'history' ? 'text-blue-600 border-b-2 border-blue-600' : ''">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z"
@@ -145,8 +145,8 @@
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-500" viewBox="0 0 20 20"
+                    <h3 class="text-lg font-semibold text-blue-700 flex items-center gap-2 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M8.257 3.099c.25 4.117 3.674 7.16 7.897 7.16H15c.55 0 1 .45 1 1s-.45 1-1 1H10.897c-4.223 0-7.647-3.043-7.897-7.16a1 1 0 01.743-.998c.25.05.51.08.77.08h1.53c.26 0 .52-.03.77-.08a1 1 0 01.743.998z"
