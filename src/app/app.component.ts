@@ -1,5 +1,5 @@
 import { Component, computed, signal, effect, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService, User } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { supabase } from './supabase.client';
@@ -14,7 +14,10 @@ export class AppComponent implements OnInit {
   currentUser = signal<User | null>(null);
   isLogged = computed(() => !!this.currentUser());
 
-  constructor(private auth: AuthService) {
+  constructor(
+    private auth: AuthService,
+    public router: Router
+  ) {
     this.currentUser.set(this.auth.getCurrentUser());
 
     effect(() => {
