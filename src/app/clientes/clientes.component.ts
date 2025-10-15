@@ -7,11 +7,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NuevoClienteDialogComponent } from './nuevo-cliente-dialog.component';
 import { RegistrarPagoDialogComponent } from './registrar-pago-dialog.component';
 import { EditarClienteDialogComponent } from './editar-cliente-dialog.component';
+import { VerRutinaDialogComponent } from './ver-rutina-dialog.component';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule, RegistrarPagoDialogComponent, EditarClienteDialogComponent],
+  imports: [CommonModule, RouterModule, FormsModule, MatDialogModule, RegistrarPagoDialogComponent, EditarClienteDialogComponent, VerRutinaDialogComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -98,8 +99,20 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  viewRoutine(client: any) {
-    alert('Ver rutina de: ' + client.name);
+  async viewRoutine(client: any) {
+    // Buscar la rutina vinculada a este cliente
+    const { data: rutina, error } = await supabase
+      .from('rutinas')
+      .select('*')
+      .eq('cliente_id', client.id)
+      .single();
+    this.dialog.open(VerRutinaDialogComponent, {
+      width: '500px',
+      data: {
+        cliente: client,
+        rutina: rutina || null
+      }
+    });
   }
 
   async deleteClient(client: any) {
