@@ -1,4 +1,3 @@
-
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { supabase } from '../supabase.client';
@@ -13,6 +12,28 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
+  /**
+   * Actualiza la contraseña del usuario autenticado (flujo de recuperación)
+   */
+  async updatePassword(newPassword: string) {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) {
+      throw new Error(error.message || 'No se pudo actualizar la contraseña.');
+    }
+    return true;
+  }
+  /**
+   * Envía un email de recuperación de contraseña usando Supabase
+   */
+  async sendPasswordResetEmail(email: string) {
+    // Cambia la URL por la de tu entorno de producción si es necesario
+    const redirectTo = `${window.location.origin}/reset-password`;
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) {
+      throw new Error(error.message || 'No se pudo enviar el email de recuperación.');
+    }
+    return true;
+  }
   private _user = signal<User | null>(null);
 
   user$ = {
