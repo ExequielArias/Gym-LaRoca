@@ -1,89 +1,63 @@
-<div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white border-b px-6 py-4 shadow-sm">
-        <div class="container mx-auto flex justify-between items-center">
-            <!-- Botón Volver -->
-            <a routerLink="/dashboard" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-                        clip-rule="evenodd" />
-                </svg>
-                Volver
-            </a>
-
-            <!-- Título Centrado -->
-            <h1 class="text-xl font-bold text-blue-700 text-center">Tienda</h1>
-
-            <!-- Carrito -->
-            <div class="relative">
-                <button (click)="toggleCart()"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            d="M3 1a1 1 0 000 2h1.22l.3.6a.5.5 0 00.878-.465l-.3-.6H14a1 1 0 000-2H3zM10 10a1 1 0 01-2 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01-2 0V10a1 1 0 012 0v4a1 1 0 01......0V10z" />
-                    </svg>
-                    Carrito ({{ cart.length }})
-                </button>
-                <!-- Badge de cantidad -->
-                <span *ngIf="cart.length > 0"
-                    class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {{ cart.length }}
-                </span>
-            </div>
-        </div>
-    </header>
-
+<div class="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-950">
     <div class="container mx-auto px-6 py-8">
         <!-- Filtros y Buscador -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+    <div class="flex flex-col sm:flex-row gap-4 mb-8 items-center">
             <!-- Categorías -->
-            <div class="flex space-x-2 bg-gray-100 p-1 rounded-lg">
+            <div class="flex space-x-2 bg-gray-800 p-1 rounded-lg">
                 <button *ngFor="let category of categories" (click)="setCategory(category)"
-                    [class]="currentCategory === category ? 'bg-white text-blue-600 border border-blue-600' : 'text-gray-700'"
+                    [class]="currentCategory === category ? 'bg-gray-900 text-red-400 border border-red-400' : 'text-gray-400'"
                     class="px-4 py-2 rounded-md text-sm font-medium transition-colors">
                     {{ category }}
                 </button>
             </div>
 
-            <!-- Buscador -->
-            <div class="relative flex-grow max-w-md">
-                <input type="text" [(ngModel)]="searchTerm" (input)="filterProducts()" placeholder="Buscar productos..."
-                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-2.5"
-                    viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
-                </svg>
+            <!-- Buscador y Carrito -->
+            <div class="flex flex-grow max-w-md items-center relative">
+                <div class="relative flex-grow">
+                    <input type="text" [(ngModel)]="searchTerm" (input)="filterProducts()" placeholder="Buscar productos..."
+                        class="w-full pl-10 pr-4 py-2 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent placeholder-gray-400" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 absolute left-3 top-2.5"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
             </div>
+            <button (click)="toggleCart()" class="ml-4 px-3 py-2 rounded-full bg-gray-800 hover:bg-gray-700 text-red-400 hover:text-white transition-colors flex items-center justify-center gap-2" title="Ver carrito">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor">
+                    <path d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z"/>
+                </svg>
+                <span class="font-medium">Carrito</span>
+            </button>
         </div>
 
         <!-- Productos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <div *ngFor="let product of filteredProducts"
-                class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 border border-blue-100">
+                class="bg-gray-900 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 border border-gray-800">
                 <!-- Imagen del producto -->
-                <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <div class="h-48 bg-gray-800 flex items-center justify-center">
                     <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain p-4" />
                 </div>
 
                 <!-- Detalles del producto -->
                 <div class="p-4">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-semibold text-gray-900 line-clamp-2">{{ product.name }}</h3>
-                        <span class="text-lg font-bold text-blue-600">{{ product.price |
+                        <h3 class="font-semibold text-white line-clamp-2">{{ product.name }}</h3>
+                        <span class="text-lg font-bold text-red-400">{{ product.price |
                             currency:'ARS':'symbol':'1.0-0' }}</span>
                     </div>
 
-                    <p class="text-sm text-gray-500 mb-3">{{ product.description }}</p>
+                    <p class="text-sm text-gray-400 mb-3">{{ product.description }}</p>
 
                     <div class="flex items-center justify-between">
-                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 font-medium">
-                            {{ product.stock }} en stock
+                        <span class="text-xs px-2 py-1 rounded-full font-medium"
+                            [ngClass]="product.stock > 0 ? 'bg-green-900 text-green-400 border border-green-600' : 'bg-gray-900 text-gray-500 border border-gray-700'">
+                            {{ product.stock > 0 ? (product.stock + ' en stock') : 'Sin stock' }}
                         </span>
                         <button (click)="addToCart(product)" [disabled]="product.stock <= 0"
-                            class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors">
+                            class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors">
                             Agregar
                         </button>
                     </div>
@@ -93,10 +67,10 @@
 
         <!-- Carrito Modal -->
         <div *ngIf="showCart" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden border-2 border-blue-200">
-                <div class="p-6 border-b flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-blue-700">Carrito de Compras</h2>
-                    <button (click)="toggleCart()" class="text-blue-500 hover:text-blue-700">
+            <div class="bg-gray-900 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden border-2 border-red-400">
+                <div class="p-6 border-b border-gray-800 flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-red-400">Carrito de Compras</h2>
+                    <button (click)="toggleCart()" class="text-red-400 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,27 +80,28 @@
                 </div>
 
                 <div class="p-6 overflow-y-auto max-h-[60vh]">
-                    <div *ngIf="cart.length === 0" class="text-center py-8 text-blue-300">
+                    <div *ngIf="cart.length === 0" class="text-center py-8 text-gray-500">
                         Tu carrito está vacío
                     </div>
 
-                    <div *ngFor="let item of cart" class="flex items-center gap-4 mb-4 pb-4 border-b last:border-b-0">
+                    <div *ngFor="let item of cart"
+                        class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-800 last:border-b-0">
                         <img [src]="item.image" [alt]="item.name" class="w-16 h-16 object-contain" />
                         <div class="flex-grow">
-                            <h4 class="font-medium">{{ item.name }}</h4>
-                            <p class="text-blue-600 font-bold">{{ item.price | currency:'ARS':'symbol':'1.0-0' }}</p>
+                            <h4 class="font-medium text-white">{{ item.name }}</h4>
+                            <p class="text-red-400 font-bold">{{ item.price | currency:'ARS':'symbol':'1.0-0' }}</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <button (click)="decreaseQuantity(item)"
-                                class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
+                                class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600">
                                 -
                             </button>
-                            <span class="w-8 text-center">{{ item.quantity }}</span>
+                            <span class="w-8 text-center text-white">{{ item.quantity }}</span>
                             <button (click)="increaseQuantity(item)"
-                                class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
+                                class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600">
                                 +
                             </button>
-                            <button (click)="removeFromCart(item)" class="text-blue-500 hover:text-blue-700 ml-2">
+                            <button (click)="removeFromCart(item)" class="text-red-400 hover:text-white ml-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path fill-rule="evenodd"
@@ -138,17 +113,17 @@
                     </div>
                 </div>
 
-                <div class="p-6 border-t">
+                <div class="p-6 border-t border-gray-800">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-lg font-bold">Total:</span>
-                        <span class="text-xl font-bold text-blue-600">{{ getTotal() | currency:'ARS':'symbol':'1.0-0'
+                        <span class="text-lg font-bold text-white">Total:</span>
+                        <span class="text-xl font-bold text-red-400">{{ getTotal() | currency:'ARS':'symbol':'1.0-0'
                             }}</span>
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Método de Pago</label>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Método de Pago</label>
                         <select [(ngModel)]="selectedPaymentMethod"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent">
                             <option value="efectivo">Efectivo</option>
                             <option value="transferencia">Transferencia</option>
                             <option value="tarjeta">Tarjeta de Crédito/Débito</option>
@@ -157,11 +132,11 @@
 
                     <div class="flex gap-3">
                         <button (click)="toggleCart()"
-                            class="flex-1 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-colors">
+                            class="flex-1 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors">
                             Continuar Comprando
                         </button>
                         <button (click)="processSale()" [disabled]="cart.length === 0"
-                            class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors">
+                            class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors">
                             Procesar Venta
                         </button>
                     </div>

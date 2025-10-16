@@ -1,5 +1,6 @@
 import { Component, computed, signal, effect, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService, User } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { supabase } from './supabase.client';
@@ -7,7 +8,7 @@ import { supabase } from './supabase.client';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, NgIf, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
@@ -50,5 +51,10 @@ export class AppComponent implements OnInit {
 
   openLogin() {
     location.href = '/login';
+  }
+
+  async logout() {
+    await this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }
